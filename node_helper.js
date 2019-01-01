@@ -18,7 +18,7 @@ module.exports = NodeHelper.create({
 		this.config = null;
 	},
 
-	getData: function() {
+	getData: function () {
 		var self = this;
 
 		var myUrl = this.config.apiBase + "?key=" + this.config.mtaAPIKey + "&feed_id=" + this.config.feed_id;

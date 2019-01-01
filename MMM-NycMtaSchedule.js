@@ -1,10 +1,10 @@
 /* Magic Mirror
- * Module: MMM-MMM-NycMtaSchedule
+ * Module: MMM-NycMtaSchedule
  *
  * By Marlee Stevenson
  */
 
-Module.register("MMM-MMM-NycMtaSchedule", {
+Module.register("MMM-NycMtaSchedule", {
 
 	defaults: {
 		mtaAPIKey: "",
@@ -23,7 +23,7 @@ Module.register("MMM-MMM-NycMtaSchedule", {
 
 	// Define required styles
 	getStyles: function () {
-		return ["font-awesome.css", "MMM-NycMtaSchedule-MTA.css"];
+		return ["font-awesome.css", "MMM-NycMtaSchedule.css"];
 	},
 
 	start: function () {
