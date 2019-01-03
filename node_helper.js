@@ -10,7 +10,6 @@ const NodeHelper = require("node_helper");
 var request = require("request");
 var GtfsRealtimeBindings = require("gtfs-realtime-bindings");
 
-
 module.exports = NodeHelper.create({
 
 	start: function () {
@@ -21,22 +20,34 @@ module.exports = NodeHelper.create({
 	getData: function () {
 		var self = this;
 
-		var myUrl = this.config.apiBase + "?key=" + this.config.mtaAPIKey + "&feed_id=" + this.config.feed_id;
+		// var allFeeds = [];
+		var trainStops = this.config.trainStops;
 
-		request({
-			url: myUrl,
-			method: "GET",
-			encoding: null
-		}, function (error, response, body) {
-			if (!error && response.statusCode == 200) {
-				var feed = GtfsRealtimeBindings.FeedMessage.decode(body);
-				self.sendSocketNotification("DATA", feed);
-			}
-		});
+		for(var i=0; i<trainStops.length; i++){
+			var myUrl = this.config.apiBase + "?key=" + this.config.mtaAPIKey + "&feed_id=" + trainStops[i].feed_id;
+			var trainStopsI = trainStops[i]
 
-		setTimeout(function () {
-			self.getData();
-		}, this.config.refreshInterval);
+			request({
+				url: myUrl,
+				method: "GET",
+				encoding: null
+			}, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					var feed = GtfsRealtimeBindings.FeedMessage.decode(body);
+					var outputFeed = {
+						feed: feed,
+						station: trainStopsI.station,
+						line: trainStopsI.line
+					};
+					// console.log("~~~~~~~~~~~~~~TESTING")
+					self.sendSocketNotification("DATA", outputFeed);
+				}
+			});
+
+			setTimeout(function () {
+				self.getData();
+			}, this.config.refreshInterval);
+		}
 	},
 
 	socketNotificationReceived: function (notification, payload) {
