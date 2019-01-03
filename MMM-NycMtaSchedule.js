@@ -81,23 +81,23 @@ Module.register("MMM-NycMtaSchedule", {
 
 		this.departures = [];
 
-		var realtime_data = data["entity"]
-		var station = "F21N"
-		var line = "F"
+		var realtimeData = data["entity"]
+		var station = this.config.station
+		var line = this.config.line
 
 		var collected_times = []
-		realtime_data.forEach(function (trains) {
+		realtimeData.forEach(function (trains) {
 			if (trains.trip_update) {
-				var unique_train_schedule = trains["trip_update"]
-				var train_name = unique_train_schedule["trip"]["route_id"]
-				var unique_arrival_times = unique_train_schedule["stop_time_update"]
-				unique_arrival_times.forEach(function (scheduled_arrivals) {
-					if (scheduled_arrivals.stop_id == station) {
-						var time_data = scheduled_arrivals["arrival"]
-						var unique_time = time_data["time"]
-						if (unique_time) {
-							if (train_name == line) {
-								collected_times.push(unique_time["low"])
+				var uniqueTrainSchedule = trains["trip_update"]
+				var trainName = uniqueTrainSchedule["trip"]["route_id"]
+				var uniqueArrivalTimes = uniqueTrainSchedule["stop_time_update"]
+				uniqueArrivalTimes.forEach(function (scheduledArrivals) {
+					if (scheduledArrivals.stop_id === station) {
+						var timeData = scheduledArrivals["arrival"]
+						var uniqueTime = timeData["time"]
+						if (uniqueTime) {
+							if (trainName === line) {
+								collected_times.push(uniqueTime["low"])
 							}
 						}
 					}
