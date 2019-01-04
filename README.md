@@ -11,10 +11,14 @@ modules: [
         position: "top_left",
         header: "Subway Times",
         config: {
-            mtaAPIKey: "", // NYC MTA API key
-            feed_id: "", // i.e. 21
-            line: "", // i.e. F
-            station: "" // i.e. F21N
+            mtaAPIKey: "", // API key
+            trainStops: [
+                {
+                    feed_id: "", // feed ID
+                    line: "", // train line
+                    station: "" // station ID
+                }
+            ]
         }
     }
 ]
